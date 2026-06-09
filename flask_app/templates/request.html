@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Заявки</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f6f8fb; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { border: 1px solid #ddd; padding: 8px; font-size: 14px; vertical-align: top; }
+    th { background: #f0f3f8; }
+    form { display: inline; }
+    .top { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn { padding: 8px 12px; background: #2d7ff9; color: #fff; text-decoration: none; border-radius: 6px; border: none; cursor: pointer; }
+    .danger { background: #d9534f; }
+    select, input { padding: 6px; margin: 2px 0; width: 100%; box-sizing: border-box; }
+    .cell-form { min-width: 180px; }
+  </style>
+</head>
+<body>
+  <h1>Таблица обращений</h1>
+
+  <div class="top">
+    <a class="btn" href="/statistics">Статистика</a>
+    <a class="btn" href="/csv">Выгрузка CSV</a>
+    <a class="btn" href="/requests?sort_by=timestamp&order=desc">Сортировать по дате</a>
+    <a class="btn" href="/requests?sort_by=urgency&order=desc">Сортировать по срочности</a>
+    <a class="btn" href="/requests?sort_by=status&order=desc">Сортировать по статусу</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Дата</th>
+        <th>User ID</th>
+        <th>Текст</th>
+        <th>Адрес</th>
+        <th>Категория</th>
+        <th>Эмоция</th>
+        <th>Срочность</th>
+        <th>Имя</th>
+        <th>Телефон</th>
+        <th>Статус</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.timestamp }}</td>
+        <td>{{ row.user_id }}</td>
+        <td>{{ row.text }}</td>
+        <td>{{ row.address }}</td>
+        <td>{{ row.category }}</td>
+        <td>{{ row.emotion }}</td>
+        <td>{{ row.urgency }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.phone }}</td>
+        <td>{{ row.status }}</td>
+        <td class="cell-form">
+          <form method="post" action="/requests/status/{{ row.id }}">
+            <select name="status">
+              <option value="новая" {% if row.status == 'новая' %}selected{% endif %}>Новая</option>
+              <option value="в_работе" {% if row.status == 'в_работе' %}selected{% endif %}>В работе</option>
+              <option value="решена" {% if row.status == 'решена' %}selected{% endif %}>Решена</option>
+            </select>
+            <button type="submit" class="btn">Сохранить</button>
+          </form>
+
+          <form method="post" action="/requests/delete/{{ row.id }}">
+            <button type="submit" class="btn danger">Удалить</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

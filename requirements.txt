@@ -1,0 +1,13 @@
+transformers==4.46.0
+torch==2.12.0
+natasha==1.6.0
+navec==0.10.0
+razdel==0.5.0
+pymorphy2==0.9.1
+pymorphy2-dicts-ru==2.4.417127.4579844
+vkbottle==4.8.2
+python-dotenv==1.2.2
+requests==2.34.2
+Flask
+pandas
+plotly

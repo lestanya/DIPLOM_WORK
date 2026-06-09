@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Статистика</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f6f8fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .top { margin-bottom: 20px; }
+    .btn { padding: 8px 12px; background: #2d7ff9; color: #fff; text-decoration: none; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Графики по обращениям</h1>
+  <div class="top">
+    <a class="btn" href="/requests">К таблице</a>
+    <a class="btn" href="/csv">CSV</a>
+  </div>
+
+  <div class="grid">
+    <div class="card">{{ graphs.cat|safe }}</div>
+    <div class="card">{{ graphs.urg|safe }}</div>
+    <div class="card">{{ graphs.status|safe }}</div>
+    <div class="card">{{ graphs.emo|safe }}</div>
+  </div>
+</body>
+</html>
